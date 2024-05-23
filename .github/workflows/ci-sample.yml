@@ -9,14 +9,14 @@ on:
     - '!README.md'
     - '!docs/**'
     - '**.tsx'
-    branches: [ "development" ]
+    branches: [ "dev", "prod" ]
   pull_request_target:
     types: [opened, reopened, synchronize, labeled, unlabeled]
     paths:
     - '!README.md'
     - '!docs/**'
     - '**.tsx'
-    branches: [ "development" ]
+    branches: [ "dev", "prod" ]
 
 jobs:
   build:

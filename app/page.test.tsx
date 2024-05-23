@@ -11,5 +11,5 @@ it("App Router: Works with Server Components", () => {
 
 it("Lorem ipsum dolor sit amet, consectetur adipiscing elit.", () => {
   render(<Page />);
-  expect(screen.getByText("Lorem Ipsum")).toBeInTheDocument();
+  expect(screen.getByText("Lorem Ipsum test 1")).toBeInTheDocument();
 });

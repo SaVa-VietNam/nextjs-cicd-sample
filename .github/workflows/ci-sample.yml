@@ -1,0 +1,55 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: nextjs CI sample
+
+on:
+  push:
+    paths:
+    - '!README.md'
+    - '!docs/**'
+    - '**.tsx'
+    branches: [ "development" ]
+  pull_request:
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+    paths:
+    - '!README.md'
+    - '!docs/**'
+    - '**.tsx'
+    branches: [ "development" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]  #[14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    # Prevent merging if a label exists
+    - uses: mheap/github-action-required-labels@v5
+      with:
+        mode: exactly
+        count: 0
+        labels: "do not build"
+    # Checkout code from the repository
+    - uses: actions/checkout@v4
+    # Setup Node.js environment
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    # Jest coverage report
+    #- uses: ArtiomTr/jest-coverage-report-action@v2
+    #  with:
+    #    github-token: ${{ secrets.SECRET_TOKEN }}
+    #    threshold: 80
+    #    skip-step: install
+    # Install dependencies
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test

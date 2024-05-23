@@ -10,7 +10,7 @@ on:
     - '!docs/**'
     - '**.tsx'
     branches: [ "development" ]
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, synchronize, labeled, unlabeled]
     paths:
     - '!README.md'
